@@ -1,6 +1,9 @@
 #include "clientAPI.h"
 
-connectToServer( "172.105.76.1", 1234, "DONTMOVE") ;
+int main ()
+{
+
+connectToServer( "172.105.76.204", 1234, "Vivi") ;
 
 /* ------------------------------------------------------------------------------
  * Wait for a Game, and retrieve its name and first data (array of the labyrinth
@@ -28,26 +31,12 @@ connectToServer( "172.105.76.1", 1234, "DONTMOVE") ;
  *
  *
  */
-waitForLabyrinth( "TRAINING <DONTMOVE>", char* labyrinthName, int* sizeX, int* sizeY) ;
-{
-	char data[128];
-	/* wait for a game */
-	waitForGame( __FUNCTION__, gameType, labyrinthName, data);
-
-	/* parse the data */
-	sscanf( data, "%d %d", sizeX, sizeY);
-
-	/* store the sizes, so that we can reuse them during getLabyrinth */
-	nX = *sizeX;
-	nY = *sizeY;
-}
+ 
+ char* labyrinthName ;
+ int* sizeX ;
+ int* sizeY ;
+waitForLabyrinth( "TRAINING <PLAY_RANDOM>", labyrinthName, sizeX, sizeY) ;
 
 closeConnection() ;
 
-echo "# Projet-Labyrinthe-" >> README.md
-git init
-git add README.md
-git commit -m "first commit"
-git branch -M main
-git remote add origin https://github.com/VictoRelleV/Projet-Labyrinthe-.git
-git push -u origin main
+}
