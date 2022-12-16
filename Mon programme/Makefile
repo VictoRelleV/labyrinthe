@@ -5,7 +5,7 @@ LIBS = -lX11
 LIBSDIR = 
 
 # fichiers du projet
-SRC = clientAPI.c labyrinthAPI.c question1.c
+SRC = clientAPI.c labyrinthAPI.c main.c
 # mainP2.c score.c 
 #individu.c mainP1.c 
 OBJ = $(SRC:.c=.o)

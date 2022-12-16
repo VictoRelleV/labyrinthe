@@ -1,4 +1,6 @@
 #include "clientAPI.h"
+#include <stdio.h>
+#include <stdlib.h>
 
 int main ()
 {
@@ -31,12 +33,16 @@ connectToServer( "172.105.76.204", 1234, "Vivi") ;
  *
  *
  */
- 
- char* labyrinthName ;
- int* sizeX ;
- int* sizeY ;
-waitForLabyrinth( "TRAINING <PLAY_RANDOM>", labyrinthName, sizeX, sizeY) ;
 
+char labyrinthName[50] ;
+int sizeX ;
+int sizeY ;
+
+waitForLabyrinth( "TRAINING DONTMOVE", labyrinthName, &sizeX, &sizeY) ;
+
+printf ("%d %d \n", sizeX, sizeY ) ;
+
+printf ("%s \n", labyrinthName ) ;
 closeConnection() ;
 
 }
