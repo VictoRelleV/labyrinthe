@@ -5,7 +5,7 @@ LIBS = -lX11
 LIBSDIR = 
 
 # fichiers du projet
-SRC = clientAPI.c labyrinthAPI.c main.c
+SRC = clientAPI.c labyrinthAPI.c main.c structure.c
 # mainP2.c score.c 
 #individu.c mainP1.c 
 OBJ = $(SRC:.c=.o)
@@ -18,6 +18,7 @@ all: $(EXEC)
 # dépendance des .h
 clientAPI.o: clientAPI.h clientAPI.c
 labyrinthAPI.o: labyrinthAPI.h labyrinthAPI.c
+structure.o: structure.h structure.c
 
 # règles de compilation
 %.o: %.c
