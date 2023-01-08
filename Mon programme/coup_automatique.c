@@ -43,4 +43,45 @@ void cherche_tresor ( int x, int y, t_tuile laby[x][y], int depart[2], int arriv
 }
 	
 	
-// void coup_auto ( )
+/*
+void coup_automatique ( int x, int y, t_tuile laby[x][y], t_move* mouvement )
+{
+	for ( int a=0; a<4; a++ )
+	{
+		if ( (a == 0) || (a == 1) )
+		{
+			for ( int ligne=0; ligne<x; ligne++ )
+			{
+				for ( int clock=0; clock<4; clock++ )
+				{
+					//expension
+				}
+			}
+		}
+		if ( (a == 2) || (a == 3) )
+		{
+			for ( int colonne=0; colonne<y; colonne++ )
+			{
+				for ( int clock=0; clock<4; clock++ )
+				{
+					//expension
+				}
+			}
+		}
+	}
+	printf ("Choisissez le type d'insertion ( 0 : INSERT_LINE_LEFT, 1 : INSERT_LINE_RIGHT, 2 : INSERT_COLUMN_TOP, 3 : INSERT_COLUMN_BOTTOM )\n" ) ;
+	scanf ("%d", &insert ) ;
+	mouvement->insert = insert ;
+	printf ("Choisissez le numéro de colonne ou de ligne\n" ) ;
+	scanf ("%d", &numero_ligne_colonne ) ;
+	mouvement->number = numero_ligne_colonne ;
+	printf ("Choisissez la rotation (from 0 to 3 clockwise quarters)\n" ) ;
+	scanf ("%d", &rotation ) ;
+	mouvement->rotation = rotation ;
+	printf ("Choisissez les coordonnées de la case où vous voulez vous déplacer\n" ) ;
+	scanf ("%d %d", &x, &y ) ;
+	mouvement->x = x ;
+	mouvement->y = y ;
+}
+*/
+
