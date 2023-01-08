@@ -31,8 +31,6 @@ void initialisation ( t_labyrinth* laby, t_position2* joueur, t_move mouvement, 
 	}
 }
 
-
-
 void maj ( t_labyrinth* laby, t_position2* joueur, t_move mouvement, int indicejoueur )
 {
 	laby->TuileSup.North = mouvement.tileN ;
@@ -53,4 +51,3 @@ void maj ( t_labyrinth* laby, t_position2* joueur, t_move mouvement, int indicej
 		joueur->joueur2.positiony = mouvement.y ;
 	}
 }
-

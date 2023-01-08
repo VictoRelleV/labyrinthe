@@ -27,6 +27,6 @@ typedef struct {
 	
 void affiche_labyrinthe ( int sizeX, int sizeY, int lab[sizeX*sizeY*5] ) ;
 
-void remplir_tableau_tuile ( int sizeX, int sizeY, t_tuile tableau_tuile[sizeX*sizeY], int lab[sizeX*sizeY*5] ) ;
+void remplir_tableau_tuile ( int sizeX, int sizeY, t_tuile tableau_tuile[sizeX][sizeY], int lab[sizeX*sizeY*5] ) ;
 
 #endif

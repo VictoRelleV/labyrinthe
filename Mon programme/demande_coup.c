@@ -30,6 +30,16 @@ int expension ( int x, int y, t_tuile laby[x][y], int depart[2], int arrivee[2] 
 {
 	int r = 1 ;
 	int parcours = 0 ;
+		
+	for ( int i=0; i<x; i++ )
+	{
+		for ( int j=0; j<y; j++ )
+		{
+			laby[i][j].Item = 0 ;
+		}
+	}
+	
+	laby[depart[0]][depart[1]].Item = r ;
 	
 	while ( laby[arrivee[0]][arrivee[1]].Item == 0 )
 	{
@@ -37,11 +47,10 @@ int expension ( int x, int y, t_tuile laby[x][y], int depart[2], int arrivee[2] 
 		{
 			for ( int j=0; j<y; j++ )
 			{
-				if ( (i == depart[0]) && (j== depart[1]) )
+				if ( (i == depart[0]) && (j == depart[1]) )
 				{
 					continue ;
 				}
-			
 				if ( (laby[i-1][j].Item == r) && (laby[i][j].Item == 0) && (laby[i-1][j].South == 0) && (laby[i][j].North == 0))
 				{
 					laby[i][j].Item = r+1 ;
@@ -64,18 +73,22 @@ int expension ( int x, int y, t_tuile laby[x][y], int depart[2], int arrivee[2] 
 				}
 			}
 		}
+		
 		if ( parcours == 0 )
 		{
+			printf("pas atteignable") ;
+			return parcours ;
 		}
 		
 		else 
 		{
 			parcours = 0 ;
-			r = r +1 ;
+			r = r+1 ;
 		}
-				
+			
 	}
-	return r ;
+	
+	return parcours ;
 }
 
 

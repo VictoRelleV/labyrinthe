@@ -3,18 +3,20 @@
 #include "structure.h"
 #include <stdio.h>
 #include <stdlib.h>
+#include "coup_automatique.h"
 
 int main ()
 {
 
-connectToServer( "172.105.76.204", 1234, "Vivi93300") ;
+connectToServer( "172.105.76.204", 1234, "Viviiiii") ;
 
 char labyrinthName[50] ;
 t_labyrinth laby ;
 
 int TileN, TileE, TileS, TileW, TileItem ;
+int depart[2], arrivee[2] ;
 
-waitForLabyrinth( "TRAINING DONTMOVE timeout=1000 display=debug", labyrinthName, &laby.sizeX, &laby.sizeY) ;
+waitForLabyrinth( "TRAINING DONTMOVE timeout=1000", labyrinthName, &laby.sizeX, &laby.sizeY) ; //display=debug
 
 printf ("Le labyrinthe est de taille %d * %d \n", laby.sizeX, laby.sizeY ) ;
 
@@ -31,13 +33,23 @@ else printf ("L'adversaire commence \n") ;
 t_move mouvement ;
 t_position2 joueur ;
 
-t_tuile tableau_tuile[laby.sizeX*laby.sizeY] ;
+t_tuile tableau_tuile[laby.sizeX][laby.sizeY] ;
 
 affiche_labyrinthe ( laby.sizeX, laby.sizeY, lab ) ;
 remplir_tableau_tuile ( laby.sizeX, laby.sizeY, tableau_tuile, lab ) ;
 
-if ( etat == 0 ) initialisation ( &laby, &joueur, mouvement, 1 ) ;
-else initialisation ( &laby, &joueur, mouvement, 2 ) ;
+int tableauTresor[24][2] ;
+tableau_tresor ( laby.sizeX, laby.sizeY, tableau_tuile, tableauTresor) ;
+cherche_tresor ( laby.sizeX, laby.sizeY, tableau_tuile, depart, arrivee, mouvement, &joueur, tableauTresor) ;
+
+if ( etat == 0 ) 
+{
+	initialisation ( &laby, &joueur, mouvement, 1 ) ;
+}
+else 
+{
+	initialisation ( &laby, &joueur, mouvement, 2 ) ;
+}
 
 while(1)
 {

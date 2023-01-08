@@ -13,6 +13,10 @@ void affiche_labyrinthe ( int sizeX, int sizeY, int lab[sizeX*sizeY*5] )
 	{
 		if ( i%5 == 0 )
 		{
+			printf (" ") ;
+		}
+		if ( i%(sizeX*5) == 0 )
+		{
 			printf ("\n") ;
 		}
 		printf ("%d", lab[i]) ;
@@ -23,14 +27,24 @@ void affiche_labyrinthe ( int sizeX, int sizeY, int lab[sizeX*sizeY*5] )
 /*
 La fonction "remplir_tableau_tuile" remplie la tableau "tableau_tuile" par les tuiles du labyrinthe
 */
-void remplir_tableau_tuile ( int sizeX, int sizeY, t_tuile tableau_tuile[sizeX*sizeY], int lab[sizeX*sizeY*5] ) 
+void remplir_tableau_tuile ( int sizeX, int sizeY, t_tuile tableau_tuile[sizeX][sizeY], int lab[sizeX*sizeY*5] ) 
 {
-	for (int j=0; j<sizeX*sizeY; j++)
+	int cpt=0 ;
+	
+	for (int j=0; j<sizeY; j++)
 	{
-		tableau_tuile[j].North = lab[0+5*j] ;
-		tableau_tuile[j].East = lab[1+5*j] ;
-		tableau_tuile[j].South = lab[2+5*j] ;
-		tableau_tuile[j].West = lab[3+5*j] ;
-		tableau_tuile[j].Item = lab[4+5*j] ;
+		for ( int i=0; i<sizeX; i++ )
+		{
+			tableau_tuile[i][j].North = lab[cpt] ;
+			cpt ++ ;
+			tableau_tuile[i][j].East = lab[cpt] ;
+			cpt ++ ;
+			tableau_tuile[i][j].South = lab[cpt] ;
+			cpt ++ ;
+			tableau_tuile[i][j].West = lab[cpt] ;
+			cpt ++ ;
+			tableau_tuile[i][j].Item = lab[cpt] ;
+			cpt ++ ;
+		}
 	}
 }
