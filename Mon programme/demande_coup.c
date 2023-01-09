@@ -73,22 +73,20 @@ int expension ( int x, int y, t_tuile laby[x][y], int depart[2], int arrivee[2] 
 				}
 			}
 		}
-		
+	
 		if ( parcours == 0 )
 		{
-			printf("pas atteignable") ;
-			return parcours ;
+			return 1607 ; // pas de chemin possible
 		}
 		
 		else 
 		{
 			parcours = 0 ;
 			r = r+1 ;
-		}
-			
+		}	
 	}
 	
-	return parcours ;
+	return 1907 ;
 }
 
 

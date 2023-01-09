@@ -38,10 +38,6 @@ t_tuile tableau_tuile[laby.sizeX][laby.sizeY] ;
 affiche_labyrinthe ( laby.sizeX, laby.sizeY, lab ) ;
 remplir_tableau_tuile ( laby.sizeX, laby.sizeY, tableau_tuile, lab ) ;
 
-int tableauTresor[24][2] ;
-tableau_tresor ( laby.sizeX, laby.sizeY, tableau_tuile, tableauTresor) ;
-cherche_tresor ( laby.sizeX, laby.sizeY, tableau_tuile, depart, arrivee, mouvement, &joueur, tableauTresor) ;
-
 if ( etat == 0 ) 
 {
 	initialisation ( &laby, &joueur, mouvement, 1 ) ;
@@ -50,6 +46,10 @@ else
 {
 	initialisation ( &laby, &joueur, mouvement, 2 ) ;
 }
+
+int tableauTresor[24][2] ;
+tableau_tresor ( laby.sizeX, laby.sizeY, tableau_tuile, tableauTresor) ;
+cherche_tresor ( laby.sizeX, laby.sizeY, tableau_tuile, depart, arrivee, mouvement, joueur, tableauTresor) ;
 
 while(1)
 {

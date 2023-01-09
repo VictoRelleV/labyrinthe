@@ -29,10 +29,10 @@ void tableau_tresor ( int x, int y, t_tuile laby[x][y], int tableauTresor[24][2]
 	printf("\n") ;
 }
 
-void cherche_tresor ( int x, int y, t_tuile laby[x][y], int depart[2], int arrivee[2], t_move mouvement, t_position2* joueur, int tableauTresor[24][2] )
+void cherche_tresor ( int x, int y, t_tuile laby[x][y], int depart[2], int arrivee[2], t_move mouvement, t_position2 joueur, int tableauTresor[24][2] )
 {
-	depart[0] = joueur->joueur1.positionx ;
-	depart[1] = joueur->joueur1.positiony ;
+	depart[0] = joueur.joueur1.positionx ;
+	depart[1] = joueur.joueur1.positiony ;
 	
 	arrivee[0] = tableauTresor[mouvement.nextItem-1][0] ;
 	arrivee[1] = tableauTresor[mouvement.nextItem-1][1] ;
@@ -41,47 +41,242 @@ void cherche_tresor ( int x, int y, t_tuile laby[x][y], int depart[2], int arriv
 	
 	printf("%d\n", parcours) ;
 }
-	
-	
-/*
+
 void coup_automatique ( int x, int y, t_tuile laby[x][y], t_move* mouvement )
 {
+	t_tuile laby_intermédiaire[x][y] = laby[x][y] ;
+	int depart[2], arrivee[2] ;
+	int cheminPossible ;
+	
 	for ( int a=0; a<4; a++ )
 	{
 		if ( (a == 0) || (a == 1) )
 		{
-			for ( int ligne=0; ligne<x; ligne++ )
+			for ( int ligne=1; ligne<x; ligne = ligne+2 )
 			{
 				for ( int clock=0; clock<4; clock++ )
 				{
-					//expension
+					if ( a == 0 )
+					{
+						if ( clock == 0 )
+						{
+							laby_intermédiaire[0][ligne].North = mouvement->TileN ;
+							laby_intermédiaire[0][ligne].East = mouvement->TileE ;
+							laby_intermédiaire[0][ligne].South = mouvement->TileS ;
+							laby_intermédiaire[0][ligne].West = mouvement->TileW ;
+							laby_intermédiaire[0][ligne].Item = mouvement->TileItem ;
+						}
+						if ( clock == 1 )
+						{
+							laby_intermédiaire[0][ligne].North = mouvement->TileW ;
+							laby_intermédiaire[0][ligne].East = mouvement->TileN ;
+							laby_intermédiaire[0][ligne].South = mouvement->TileE ;
+							laby_intermédiaire[0][ligne].West = mouvement->TileS ;
+							laby_intermédiaire[0][ligne].Item = mouvement->TileItem ;
+						}
+						if ( clock == 2 )
+						{
+							laby_intermédiaire[0][ligne].North = mouvement->TileS ;
+							laby_intermédiaire[0][ligne].East = mouvement->TileW ;
+							laby_intermédiaire[0][ligne].South = mouvement->TileN ;
+							laby_intermédiaire[0][ligne].West = mouvement->TileE ;
+							laby_intermédiaire[0][ligne].Item = mouvement->TileItem ;
+						}
+						if ( clock == 3 )
+						{
+							laby_intermédiaire[0][ligne].North = mouvement->TileE ;
+							laby_intermédiaire[0][ligne].East = mouvement->TileS ;
+							laby_intermédiaire[0][ligne].South = mouvement->TileW ;
+							laby_intermédiaire[0][ligne].West = mouvement->TileN ;
+							laby_intermédiaire[0][ligne].Item = mouvement->TileItem ;
+						}
+						
+						cheminPossible = expension ( x, y, laby_intermédiaire, depart, arrivee ) ;
+						if ( cheminPossible = 1907 )
+						{
+								mouvement->insert = a ;
+								mouvement->number = ligne ;
+								mouvement->rotation = clock ;
+								mouvement->x = arrivee[0] ;
+								mouvement->y = arrivee[1] ;
+								sendMove(&mouvement) ;
+						}
+						if ( cheminPossible = 1607 )
+						{
+							// move legal
+						}
+						
+						
+					}
+					
+					if ( a == 1 )
+					{
+						if ( clock == 0 )
+						{
+							laby_intermédiaire[x-1][ligne].North = mouvement->TileN ;
+							laby_intermédiaire[x-1][ligne].East = mouvement->TileE ;
+							laby_intermédiaire[x-1][ligne].South = mouvement->TileS ;
+							laby_intermédiaire[x-1][ligne].West = mouvement->TileW ;
+							laby_intermédiaire[x-1][ligne].Item = mouvement->TileItem ;
+						}
+						if ( clock == 1 )
+						{
+							laby_intermédiaire[x-1][ligne].North = mouvement->TileW ;
+							laby_intermédiaire[x-1][ligne].East = mouvement->TileN ;
+							laby_intermédiaire[x-1][ligne].South = mouvement->TileE ;
+							laby_intermédiaire[x-1][ligne].West = mouvement->TileS ;
+							laby_intermédiaire[x-1][ligne].Item = mouvement->TileItem ;
+						}
+						if ( clock == 2 )
+						{
+							laby_intermédiaire[x-1][ligne].North = mouvement->TileS ;
+							laby_intermédiaire[x-1][ligne].East = mouvement->TileW ;
+							laby_intermédiaire[x-1][ligne].South = mouvement->TileN ;
+							laby_intermédiaire[x-1][ligne].West = mouvement->TileE ;
+							laby_intermédiaire[x-1][ligne].Item = mouvement->TileItem ;
+						}
+						if ( clock == 3 )
+						{
+							laby_intermédiaire[x-1][ligne].North = mouvement->TileE ;
+							laby_intermédiaire[x-1][ligne].East = mouvement->TileS ;
+							laby_intermédiaire[x-1][ligne].South = mouvement->TileW ;
+							laby_intermédiaire[x-1][ligne].West = mouvement->TileN ;
+							laby_intermédiaire[x-1][ligne].Item = mouvement->TileItem ;
+						}
+						
+						cheminPossible = expension ( x, y, laby_intermédiaire, depart, arrivee ) ;
+						if ( cheminPossible = 1907 )
+						{
+								mouvement->insert = a ;
+								mouvement->number = ligne ;
+								mouvement->rotation = clock ;
+								mouvement->x = arrivee[0] ;
+								mouvement->y = arrivee[1] ;
+								sendMove(&mouvement) ;
+						}
+						if ( cheminPossible = 1607 )
+						{
+							// move legal
+						}
+					}
 				}
 			}
 		}
+		
+		
 		if ( (a == 2) || (a == 3) )
 		{
-			for ( int colonne=0; colonne<y; colonne++ )
+			for ( int colonne=1; colonne<y; colonne = colonne+2 )
 			{
 				for ( int clock=0; clock<4; clock++ )
 				{
-					//expension
+					if ( a == 2 )
+					{
+						if ( clock == 0 )
+						{
+							laby_intermédiaire[colonne][0].North = mouvement.TileN ;
+							laby_intermédiaire[colonne][0].East = mouvement.TileE ;
+							laby_intermédiaire[colonne][0].South = mouvement.TileS ;
+							laby_intermédiaire[colonne][0].West = mouvement.TileW ;
+							laby_intermédiaire[colonne][0].Item = mouvement.TileItem ;
+						}
+						if ( clock == 1 )
+						{
+							laby_intermédiaire[colonne][0].North = mouvement.TileW ;
+							laby_intermédiaire[colonne][0].East = mouvement.TileN ;
+							laby_intermédiaire[colonne][0].South = mouvement.TileE ;
+							laby_intermédiaire[colonne][0].West = mouvement.TileS ;
+							laby_intermédiaire[colonne][0].Item = mouvement.TileItem ;
+						}
+						if ( clock == 2 )
+						{
+							laby_intermédiaire[colonne][0].North = mouvement.TileS ;
+							laby_intermédiaire[colonne][0].East = mouvement.TileW ;
+							laby_intermédiaire[colonne][0].South = mouvement.TileN ;
+							laby_intermédiaire[colonne][0].West = mouvement.TileE ;
+							laby_intermédiaire[colonne][0].Item = mouvement.TileItem ;
+						}
+						if ( clock == 3 )
+						{
+							laby_intermédiaire[colonne][0].North = mouvement.TileE ;
+							laby_intermédiaire[colonne][0].East = mouvement.TileS ;
+							laby_intermédiaire[colonne][0].South = mouvement.TileW ;
+							laby_intermédiaire[colonne][0].West = mouvement.TileN ;
+							laby_intermédiaire[colonne][0].Item = mouvement.TileItem ;
+						}
+						
+						cheminPossible = expension ( x, y, laby_intermédiaire, depart, arrivee ) ;
+						if ( cheminPossible = 1907 )
+						{
+								mouvement->insert = a ;
+								mouvement->number = ligne ;
+								mouvement->rotation = clock ;
+								mouvement->x = arrivee[0] ;
+								mouvement->y = arrivee[1] ;
+								sendMove(&mouvement) ;
+						}
+						if ( cheminPossible = 1607 )
+						{
+							// move legal
+						}
+						
+						
+					}
+					
+					if ( a == 1 )
+					{
+						if ( clock == 0 )
+						{
+							laby_intermédiaire[colonne][y-1].North = mouvement.TileN ;
+							laby_intermédiaire[colonne][y-1].East = mouvement.TileE ;
+							laby_intermédiaire[colonne][y-1].South = mouvement.TileS ;
+							laby_intermédiaire[colonne][y-1].West = mouvement.TileW ;
+							laby_intermédiaire[colonne][y-1].Item = mouvement.TileItem ;
+						}
+						if ( clock == 1 )
+						{
+							laby_intermédiaire[colonne][y-1].North = mouvement.TileW ;
+							laby_intermédiaire[colonne][y-1].East = mouvement.TileN ;
+							laby_intermédiaire[colonne][y-1].South = mouvement.TileE ;
+							laby_intermédiaire[colonne][y-1].West = mouvement.TileS ;
+							laby_intermédiaire[colonne][y-1].Item = mouvement.TileItem ;
+						}
+						if ( clock == 2 )
+						{
+							laby_intermédiaire[colonne][y-1].North = mouvement.TileS ;
+							laby_intermédiaire[colonne][y-1].East = mouvement.TileW ;
+							laby_intermédiaire[colonne][y-1].South = mouvement.TileN ;
+							laby_intermédiaire[colonne][y-1].West = mouvement.TileE ;
+							laby_intermédiaire[colonne][y-1].Item = mouvement.TileItem ;
+						}
+						if ( clock == 3 )
+						{
+							laby_intermédiaire[colonne][y-1].North = mouvement.TileE ;
+							laby_intermédiaire[colonne][y-1].East = mouvement.TileS ;
+							laby_intermédiaire[colonne][y-1].South = mouvement.TileW ;
+							laby_intermédiaire[colonne][y-1].West = mouvement.TileN ;
+							laby_intermédiaire[colonne][y-1].Item = mouvement.TileItem ;
+						}
+						
+						cheminPossible = expension ( x, y, laby_intermédiaire, depart, arrivee ) ;
+						if ( cheminPossible = 1907 )
+						{
+								mouvement->insert = a ;
+								mouvement->number = ligne ;
+								mouvement->rotation = clock ;
+								mouvement->x = arrivee[0] ;
+								mouvement->y = arrivee[1] ;
+								sendMove(&mouvement) ;
+						}
+						if ( cheminPossible = 1607 )
+						{
+							// move legal
+						}
+					}
 				}
 			}
 		}
 	}
-	printf ("Choisissez le type d'insertion ( 0 : INSERT_LINE_LEFT, 1 : INSERT_LINE_RIGHT, 2 : INSERT_COLUMN_TOP, 3 : INSERT_COLUMN_BOTTOM )\n" ) ;
-	scanf ("%d", &insert ) ;
-	mouvement->insert = insert ;
-	printf ("Choisissez le numéro de colonne ou de ligne\n" ) ;
-	scanf ("%d", &numero_ligne_colonne ) ;
-	mouvement->number = numero_ligne_colonne ;
-	printf ("Choisissez la rotation (from 0 to 3 clockwise quarters)\n" ) ;
-	scanf ("%d", &rotation ) ;
-	mouvement->rotation = rotation ;
-	printf ("Choisissez les coordonnées de la case où vous voulez vous déplacer\n" ) ;
-	scanf ("%d %d", &x, &y ) ;
-	mouvement->x = x ;
-	mouvement->y = y ;
 }
-*/
+
 
