@@ -7,6 +7,7 @@
 typedef struct {
 	int North, East, South, West ;
 	int Item ;
+	int distance ;
 } t_tuile ;
 
 typedef struct {

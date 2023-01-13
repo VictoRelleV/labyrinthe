@@ -26,22 +26,41 @@ void coup ( t_move* mouvement )
 	mouvement->y = y ;
 }
 
-int expension ( int x, int y, t_tuile laby[x][y], int depart[2], int arrivee[2] )
+int expension ( int x, int y, t_tuile laby[x][y], int depart[2], int arrivee[2], t_move* mouvement, t_position2 joueur, int tableauTresor[24][2] )
 {
+	depart[0] = joueur.joueur1.positionx ;
+	depart[1] = joueur.joueur1.positiony ;
+	
+	arrivee[0] = tableauTresor[mouvement->nextItem-1][0] ;
+	arrivee[1] = tableauTresor[mouvement->nextItem-1][1] ;
+	printf("\n%d\n",mouvement->nextItem);
+	printf("%d,%d\n", depart[0], depart[1] );
+	printf("%d,%d", arrivee[0], arrivee[1] );
+	
 	int r = 1 ;
 	int parcours = 0 ;
-		
+	
 	for ( int i=0; i<x; i++ )
 	{
 		for ( int j=0; j<y; j++ )
 		{
-			laby[i][j].Item = 0 ;
+			laby[i][j].distance = 0 ;
 		}
 	}
 	
-	laby[depart[0]][depart[1]].Item = r ;
+	laby[depart[0]][depart[1]].distance = r ;
 	
-	while ( laby[arrivee[0]][arrivee[1]].Item == 0 )
+	printf("\n") ;
+	for ( int j=0; j<y; j++ )
+	{
+		for ( int i=0; i<x; i++ )
+		{
+			printf("%d", laby[i][j].distance ) ;
+		}
+		printf("\n") ;
+	}
+	
+	while ( laby[arrivee[0]][arrivee[1]].distance == 0 )
 	{
 		for ( int i=0; i<x; i++ )
 		{
@@ -51,32 +70,42 @@ int expension ( int x, int y, t_tuile laby[x][y], int depart[2], int arrivee[2] 
 				{
 					continue ;
 				}
-				if ( (laby[i-1][j].Item == r) && (laby[i][j].Item == 0) && (laby[i-1][j].South == 0) && (laby[i][j].North == 0))
+				if ( (laby[i-1][j].distance == r) && (laby[i][j].distance == 0) && (laby[i-1][j].East == 0) && (laby[i][j].West == 0) && (i>0) )
 				{
-					laby[i][j].Item = r+1 ;
+					laby[i][j].distance = r+1 ;
 					parcours ++ ;
 				}
-				if ( (laby[i][j-1].Item == r) && (laby[i][j].Item == 0) && (laby[i][j-1].East == 0) && (laby[i][j].West == 0))
+				if ( (laby[i][j-1].distance == r) && (laby[i][j].distance == 0) && (laby[i][j-1].South == 0) && (laby[i][j].North == 0) && (j>0) )
 				{
-					laby[i][j].Item = r+1 ;
+					laby[i][j].distance = r+1 ;
 					parcours ++ ;
 				}
-				if ( (laby[i][j+1].Item == r) && (laby[i][j].Item == 0) && (laby[i][j+1].West == 0) && (laby[i][j].East == 0))
+				if ( (laby[i][j+1].distance == r) && (laby[i][j].distance == 0) && (laby[i][j+1].North == 0) && (laby[i][j].South == 0) && (j<y-1) )
 				{
-					laby[i][j].Item = r+1 ;
+					laby[i][j].distance = r+1 ;
 					parcours ++ ;
 				}
-				if ( (laby[i+1][j].Item == r) && (laby[i][j].Item == 0) && (laby[i+1][j].North == 0) && (laby[i][j].South == 0))
+				if ( (laby[i+1][j].distance == r) && (laby[i][j].distance == 0) && (laby[i+1][j].West == 0) && (laby[i][j].East == 0) && (i<x-1) )
 				{
-					laby[i][j].Item = r+1 ;
+					laby[i][j].distance = r+1 ;
 					parcours ++ ;
 				}
 			}
 		}
+		
+		printf("\n") ;
+		for ( int j=0; j<y; j++ )
+		{
+			for ( int i=0; i<x; i++ )
+			{
+				printf("%d", laby[i][j].distance ) ;
+			}
+			printf("\n") ;
+		}
 	
 		if ( parcours == 0 )
 		{
-			return 1607 ; // pas de chemin possible
+			return 9999 ; // pas de chemin possible
 		}
 		
 		else 
@@ -86,7 +115,7 @@ int expension ( int x, int y, t_tuile laby[x][y], int depart[2], int arrivee[2] 
 		}	
 	}
 	
-	return 1907 ;
+	return 1111 ; // il y a un chemin
 }
 
 

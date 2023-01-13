@@ -4,19 +4,19 @@
 #include "structure.h"
 #include "labyrinthAPI.h"
 
-void initialisation ( t_labyrinth* laby, t_position2* joueur, t_move mouvement, int indicejoueur )
+void initialisation ( t_labyrinth* laby, t_position2* joueur, t_move* mouvement, int indicejoueur )
 {
-	laby->TuileSup.North = mouvement.tileN ;
-	laby->TuileSup.East = mouvement.tileE ;
-	laby->TuileSup.South = mouvement.tileS ;
-	laby->TuileSup.West = mouvement.tileW ;
-	laby->TuileSup.Item = mouvement.tileItem ;
+	laby->TuileSup.North = mouvement->tileN ;
+	laby->TuileSup.East = mouvement->tileE ;
+	laby->TuileSup.South = mouvement->tileS ;
+	laby->TuileSup.West = mouvement->tileW ;
+	laby->TuileSup.Item = mouvement->tileItem ;
 	
 	if ( indicejoueur == 1 )
 	{ 
 		joueur->joueur1.positionx = 0 ;
 		joueur->joueur1.positiony = 0 ;
-		mouvement.nextItem = 1 ;
+		mouvement->nextItem = 1 ;
 		joueur->joueur2.positionx = laby->sizeX -1 ;
 		joueur->joueur2.positiony = laby->sizeY -1 ;
 	}
@@ -25,7 +25,7 @@ void initialisation ( t_labyrinth* laby, t_position2* joueur, t_move mouvement, 
 	{
 		joueur->joueur1.positionx = laby->sizeX -1 ;
 		joueur->joueur1.positiony = laby->sizeY -1 ;
-		mouvement.nextItem = 24 ;
+		mouvement->nextItem = 24 ;
 		joueur->joueur2.positionx = 0 ;
 		joueur->joueur2.positiony = 0 ;
 	}

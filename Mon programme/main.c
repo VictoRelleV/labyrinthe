@@ -8,7 +8,7 @@
 int main ()
 {
 
-connectToServer( "172.105.76.204", 1234, "Viviiiii") ;
+connectToServer( "172.105.76.204", 1234, "Viviiiiii") ;
 
 char labyrinthName[50] ;
 t_labyrinth laby ;
@@ -40,24 +40,33 @@ remplir_tableau_tuile ( laby.sizeX, laby.sizeY, tableau_tuile, lab ) ;
 
 if ( etat == 0 ) 
 {
-	initialisation ( &laby, &joueur, mouvement, 1 ) ;
+	initialisation ( &laby, &joueur, &mouvement, 1 ) ;
+	printf("\n%d\n",mouvement.nextItem);
 }
 else 
 {
-	initialisation ( &laby, &joueur, mouvement, 2 ) ;
+	initialisation ( &laby, &joueur, &mouvement, 2 ) ;
+	printf("\n%d\n",mouvement.nextItem);
 }
 
 int tableauTresor[24][2] ;
 tableau_tresor ( laby.sizeX, laby.sizeY, tableau_tuile, tableauTresor) ;
-cherche_tresor ( laby.sizeX, laby.sizeY, tableau_tuile, depart, arrivee, mouvement, joueur, tableauTresor) ;
+for ( int k=0; k<24; k++ )
+{
+		printf("%d%d ", tableauTresor[k][0], tableauTresor[k][1] ) ;
+}
+printf("\n") ;
+
+//cherche_tresor ( laby.sizeX, laby.sizeY, tableau_tuile, depart, arrivee, &mouvement, joueur, tableauTresor) ;
+int cheminPossible = expension ( laby.sizeX, laby.sizeY, tableau_tuile, depart, arrivee, &mouvement, joueur, tableauTresor ) ;
+printf("%d", cheminPossible ) ;
 
 while(1)
 {
 	if ( etat == 0 )
 	{
 		printLabyrinth() ;
-		
-		coup ( &mouvement ) ;
+		coup_automatique ( laby.sizeX, laby.sizeY, tableau_tuile, &mouvement, depart, arrivee, joueur, tableauTresor ) ;
 		sendMove(&mouvement) ;
 		maj( &laby, &joueur, mouvement, 1 ) ;
 		
@@ -71,7 +80,7 @@ while(1)
 		
 		printLabyrinth() ;
 		
-		coup ( &mouvement ) ;
+		coup_automatique ( laby.sizeX, laby.sizeY, tableau_tuile, &mouvement, depart, arrivee, joueur, tableauTresor ) ;
 		sendMove(&mouvement) ;
 		maj( &laby, &joueur, mouvement, 1 ) ;
 	}
