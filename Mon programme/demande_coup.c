@@ -9,6 +9,9 @@ int numero_ligne_colonne ;
 int rotation ;
 int x, y ;
 
+/*
+La fonction "coup" demande à l'utilisateur de rentrer un coup manuellement.
+*/
 void coup ( t_move* mouvement )
 {
 	printf ("Choisissez le type d'insertion ( 0 : INSERT_LINE_LEFT, 1 : INSERT_LINE_RIGHT, 2 : INSERT_COLUMN_TOP, 3 : INSERT_COLUMN_BOTTOM )\n" ) ;
@@ -26,16 +29,13 @@ void coup ( t_move* mouvement )
 	mouvement->y = y ;
 }
 
-int expension ( int x, int y, t_tuile laby[x][y], int depart[2], int arrivee[2], t_move* mouvement, t_position2 joueur, int tableauTresor[24][2] )
+int expension ( int x, int y, t_tuile laby[x][y], int depart[2], int arrivee[2], t_move* mouvement, t_position2* joueur, int tableauTresor[24][2] )
 {
-	depart[0] = joueur.joueur1.positionx ;
-	depart[1] = joueur.joueur1.positiony ;
+	depart[0] = joueur->joueur1.positionx ;
+	depart[1] = joueur->joueur1.positiony ;
 	
 	arrivee[0] = tableauTresor[mouvement->nextItem-1][0] ;
 	arrivee[1] = tableauTresor[mouvement->nextItem-1][1] ;
-	printf("\n%d\n",mouvement->nextItem);
-	printf("%d,%d\n", depart[0], depart[1] );
-	printf("%d,%d", arrivee[0], arrivee[1] );
 	
 	int r = 1 ;
 	int parcours = 0 ;
@@ -49,16 +49,6 @@ int expension ( int x, int y, t_tuile laby[x][y], int depart[2], int arrivee[2],
 	}
 	
 	laby[depart[0]][depart[1]].distance = r ;
-	
-	printf("\n") ;
-	for ( int j=0; j<y; j++ )
-	{
-		for ( int i=0; i<x; i++ )
-		{
-			printf("%d", laby[i][j].distance ) ;
-		}
-		printf("\n") ;
-	}
 	
 	while ( laby[arrivee[0]][arrivee[1]].distance == 0 )
 	{
@@ -91,16 +81,6 @@ int expension ( int x, int y, t_tuile laby[x][y], int depart[2], int arrivee[2],
 					parcours ++ ;
 				}
 			}
-		}
-		
-		printf("\n") ;
-		for ( int j=0; j<y; j++ )
-		{
-			for ( int i=0; i<x; i++ )
-			{
-				printf("%d", laby[i][j].distance ) ;
-			}
-			printf("\n") ;
 		}
 	
 		if ( parcours == 0 )

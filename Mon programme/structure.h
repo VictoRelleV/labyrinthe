@@ -19,6 +19,7 @@ typedef struct {
 typedef struct {
 	int positionx ;
 	int positiony ;
+	int tresor ;
 } t_position ;
 
 typedef struct {

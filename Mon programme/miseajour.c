@@ -4,13 +4,22 @@
 #include "structure.h"
 #include "labyrinthAPI.h"
 
-void initialisation ( t_labyrinth* laby, t_position2* joueur, t_move* mouvement, int indicejoueur )
+/*
+La fonction "initialisation" initialise les données de départ.
+*/
+void initialisation ( t_labyrinth* laby, t_position2* joueur, int indicejoueur, int TileN, int TileE, int TileS, int TileW, int TileItem, t_move* mouvement)
 {
-	laby->TuileSup.North = mouvement->tileN ;
-	laby->TuileSup.East = mouvement->tileE ;
-	laby->TuileSup.South = mouvement->tileS ;
-	laby->TuileSup.West = mouvement->tileW ;
-	laby->TuileSup.Item = mouvement->tileItem ;
+	laby->TuileSup.North = TileN ;
+	laby->TuileSup.East = TileE ;
+	laby->TuileSup.South = TileS ;
+	laby->TuileSup.West = TileW ;
+	laby->TuileSup.Item = TileItem ;
+	
+	mouvement->tileN = TileN ;
+	mouvement->tileE = TileE ;
+	mouvement->tileS = TileS ;
+	mouvement->tileW = TileW ;
+	mouvement->tileItem = TileItem ;
 	
 	if ( indicejoueur == 1 )
 	{ 
@@ -31,23 +40,26 @@ void initialisation ( t_labyrinth* laby, t_position2* joueur, t_move* mouvement,
 	}
 }
 
-void maj ( t_labyrinth* laby, t_position2* joueur, t_move mouvement, int indicejoueur )
+/*
+La fonction "maj" met à jour les données du jeu.
+*/
+void maj ( t_labyrinth* laby, t_position2* joueur, t_move* mouvement, int indicejoueur )
 {
-	laby->TuileSup.North = mouvement.tileN ;
-	laby->TuileSup.East = mouvement.tileE ;
-	laby->TuileSup.South = mouvement.tileS ;
-	laby->TuileSup.West = mouvement.tileW ;
-	laby->TuileSup.Item = mouvement.tileItem ;
+	laby->TuileSup.North = mouvement->tileN ;
+	laby->TuileSup.East = mouvement->tileE ;
+	laby->TuileSup.South = mouvement->tileS ;
+	laby->TuileSup.West = mouvement->tileW ;
+	laby->TuileSup.Item = mouvement->tileItem ;
 	
 	if ( indicejoueur == 1 )
 	{ 
-		joueur->joueur1.positionx = mouvement.x ;
-		joueur->joueur1.positiony = mouvement.y ;
+		joueur->joueur1.positionx = mouvement->x ;
+		joueur->joueur1.positiony = mouvement->y ;
 	}
 	
 	else if ( indicejoueur == 2 )
 	{
-		joueur->joueur2.positionx = mouvement.x ;
-		joueur->joueur2.positiony = mouvement.y ;
+		joueur->joueur2.positionx = mouvement->x ;
+		joueur->joueur2.positiony = mouvement->y ;
 	}
 }
