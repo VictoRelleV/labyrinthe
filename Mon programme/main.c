@@ -56,6 +56,7 @@ int tableauTresor[24][2] ;
 tableau_tresor ( laby.sizeX, laby.sizeY, tableau_tuile, tableauTresor) ;
 
 printf("La tuile supplémentaire est [%d,%d,%d,%d,%d]\n", mouvement.tileN, mouvement.tileE, mouvement.tileS, mouvement.tileW, mouvement.tileItem ) ;
+printf("\n") ;
 
 while(1)
 {

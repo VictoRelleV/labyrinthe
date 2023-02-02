@@ -7,6 +7,5 @@
 #define __DEMANDE_COUP__
 
 void coup ( t_move* mouvement ) ;
-int expension ( int x, int y, t_tuile laby[x][y], int depart[2], int arrivee[2], t_move* mouvement, t_position2* joueur, int tableauTresor[24][2] ) ;
 
 #endif

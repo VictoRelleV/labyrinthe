@@ -5,6 +5,75 @@
 #include "coup_automatique.h"
 #include "demande_coup.h"
 
+int expension ( int x, int y, t_tuile laby[x][y], int depart[2], int arrivee[2], t_move* mouvement, t_position2* joueur, int tableauTresor[24][2] )
+{
+	depart[0] = joueur->joueur1.positionx ;
+	depart[1] = joueur->joueur1.positiony ;
+	
+	arrivee[0] = tableauTresor[mouvement->nextItem-1][0] ;
+	arrivee[1] = tableauTresor[mouvement->nextItem-1][1] ;
+	
+	int r = 1 ;
+	int parcours = 0 ;
+	
+	for ( int i=0; i<x; i++ )
+	{
+		for ( int j=0; j<y; j++ )
+		{
+			laby[i][j].distance = 0 ;
+		}
+	}
+	
+	laby[depart[0]][depart[1]].distance = r ;
+	
+	while ( laby[arrivee[0]][arrivee[1]].distance == 0 )
+	{
+		for ( int i=0; i<x; i++ )
+		{
+			for ( int j=0; j<y; j++ )
+			{
+				if ( (i == depart[0]) && (j == depart[1]) )
+				{
+					continue ;
+				}
+				if ( (laby[i-1][j].distance == r) && (laby[i][j].distance == 0) && (laby[i-1][j].East == 0) && (laby[i][j].West == 0) && (i>0) )
+				{
+					laby[i][j].distance = r+1 ;
+					parcours ++ ;
+				}
+				if ( (laby[i][j-1].distance == r) && (laby[i][j].distance == 0) && (laby[i][j-1].South == 0) && (laby[i][j].North == 0) && (j>0) )
+				{
+					laby[i][j].distance = r+1 ;
+					parcours ++ ;
+				}
+				if ( (laby[i][j+1].distance == r) && (laby[i][j].distance == 0) && (laby[i][j+1].North == 0) && (laby[i][j].South == 0) && (j<y-1) )
+				{
+					laby[i][j].distance = r+1 ;
+					parcours ++ ;
+				}
+				if ( (laby[i+1][j].distance == r) && (laby[i][j].distance == 0) && (laby[i+1][j].West == 0) && (laby[i][j].East == 0) && (i<x-1) )
+				{
+					laby[i][j].distance = r+1 ;
+					parcours ++ ;
+				}
+			}
+		}
+	
+		if ( parcours == 0 )
+		{
+			return 9999 ; // pas de chemin possible
+		}
+		
+		else 
+		{
+			parcours = 0 ;
+			r = r+1 ;
+		}	
+	}
+	
+	return 1111 ; // il y a un chemin
+}
+
 /*
 La fonction "tableau_tresor" remplie tableauTresor avec les coordonnées de chaque trésor.
 */
@@ -206,7 +275,7 @@ int coup_automatique ( int x, int y, t_tuile laby[x][y], t_move* mouvement, int 
 							printf("1\n") ;
 							rotation_tuile ( tuile_sup, 0, mouvement ) ;
 							printf("2\n") ;
-							inserer_tuile ( x, y, laby_intermédiaire, &mouvement, tuile_sup, insert, ligne, 1 ) ;
+							inserer_tuile ( x, y, laby_intermédiaire, mouvement, tuile_sup, insert, ligne, 1 ) ;
 							printf("3\n") ;
 						}
 						if ( clock == 1 )
@@ -225,7 +294,7 @@ int coup_automatique ( int x, int y, t_tuile laby[x][y], t_move* mouvement, int 
 							inserer_tuile ( x, y, laby_intermédiaire, mouvement, tuile_sup, insert, ligne, 1 ) ;
 						}
 						printf("4\n") ;
-						cheminPossible = expension ( x, y, laby_intermédiaire, depart[2], arrivee[2], &mouvement, joueur, tableauTresor ) ;
+						cheminPossible = expension ( x, y, laby_intermédiaire, depart, arrivee, mouvement, joueur, tableauTresor ) ;
 						printf("5\n") ;
 						if ( cheminPossible == 1111 )
 						{
@@ -234,6 +303,7 @@ int coup_automatique ( int x, int y, t_tuile laby[x][y], t_move* mouvement, int 
 								mouvement->rotation = clock ;
 								mouvement->x = arrivee[0] ;
 								mouvement->y = arrivee[1] ;
+								printf("Votre coup est [%d,%d,%d,%d,%d]", insert, ligne, clock, arrivee[0], arrivee[1] ) ;
 								//sendMove(&mouvement) ;
 								return 0 ;
 						}											
@@ -262,7 +332,7 @@ int coup_automatique ( int x, int y, t_tuile laby[x][y], t_move* mouvement, int 
 							inserer_tuile ( x, y, laby_intermédiaire, mouvement, tuile_sup, insert, ligne, 1 ) ;
 						}
 						
-						cheminPossible = expension ( x, y, laby_intermédiaire, depart[2], arrivee[2], &mouvement, &joueur, tableauTresor ) ;
+						cheminPossible = expension ( x, y, laby_intermédiaire, depart, arrivee, mouvement, joueur, tableauTresor ) ;
 						if ( cheminPossible == 1111 )
 						{
 								mouvement->insert = insert ;
@@ -270,6 +340,7 @@ int coup_automatique ( int x, int y, t_tuile laby[x][y], t_move* mouvement, int 
 								mouvement->rotation = clock ;
 								mouvement->x = arrivee[0] ;
 								mouvement->y = arrivee[1] ;
+								printf("Votre coup est [%d,%d,%d,%d,%d]", insert, ligne, clock, arrivee[0], arrivee[1] ) ;
 								//sendMove(&mouvement) ;
 								return 0 ;
 						}
@@ -310,7 +381,7 @@ int coup_automatique ( int x, int y, t_tuile laby[x][y], t_move* mouvement, int 
 							inserer_tuile ( x, y, laby_intermédiaire, mouvement, tuile_sup, insert, 1, colonne ) ;
 						}
 						
-						cheminPossible = expension ( x, y, laby, depart[2], arrivee[2], &mouvement, &joueur, tableauTresor ) ;
+						cheminPossible = expension ( x, y, laby, depart, arrivee, mouvement, joueur, tableauTresor ) ;
 						if ( cheminPossible == 1111 )
 						{
 								mouvement->insert = insert ;
@@ -318,6 +389,7 @@ int coup_automatique ( int x, int y, t_tuile laby[x][y], t_move* mouvement, int 
 								mouvement->rotation = clock ;
 								mouvement->x = arrivee[0] ;
 								mouvement->y = arrivee[1] ;
+								printf("Votre coup est [%d,%d,%d,%d,%d]", insert, colonne, clock, arrivee[0], arrivee[1] ) ;
 								//sendMove(&mouvement) ;
 								return 0 ;								
 						}		
@@ -346,7 +418,7 @@ int coup_automatique ( int x, int y, t_tuile laby[x][y], t_move* mouvement, int 
 							inserer_tuile ( x, y, laby_intermédiaire, mouvement, tuile_sup, insert, 1, colonne ) ;
 						}
 						
-						cheminPossible = expension ( x, y, laby, depart[2], arrivee[2], &mouvement, &joueur, tableauTresor ) ;
+						cheminPossible = expension ( x, y, laby, depart, arrivee, mouvement, joueur, tableauTresor ) ;
 						if ( cheminPossible == 1111 )
 						{
 								mouvement->insert = insert ;
@@ -354,6 +426,7 @@ int coup_automatique ( int x, int y, t_tuile laby[x][y], t_move* mouvement, int 
 								mouvement->rotation = clock ;
 								mouvement->x = arrivee[0] ;
 								mouvement->y = arrivee[1] ;
+								printf("Votre coup est [%d,%d,%d,%d,%d]", insert, colonne, clock, arrivee[0], arrivee[1] ) ;
 								//sendMove(&mouvement) ;
 								return 0 ;								
 						}
